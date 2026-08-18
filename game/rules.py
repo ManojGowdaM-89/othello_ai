@@ -5,7 +5,7 @@ DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1),
               (-1, -1), (-1, 1), (1, -1), (1, 1)]
 
 def is_valid_move(board, row, col, player):
-    """Check if placing a disc at (row, col) is valid for player."""
+    # checks if move is legal - must flip at least one opponent disc
     if board[row][col] != EMPTY:
         return False
 
@@ -30,7 +30,7 @@ def is_valid_move(board, row, col, player):
     return False
 
 def get_valid_moves(board, player):
-    """Return a list of all valid moves for player."""
+    # returns all legal moves for given player
     valid_moves = []
     for row in range(BOARD_SIZE):
         for col in range(BOARD_SIZE):
@@ -39,7 +39,7 @@ def get_valid_moves(board, player):
     return valid_moves
 
 def apply_move(board, row, col, player):
-    """Apply a move and flip all captured discs. Returns new board."""
+    # places disc and flips all captured opponent discs in 8 directions
     new_board = board.copy()
     new_board[row][col] = player
     opponent = WHITE if player == BLACK else BLACK
