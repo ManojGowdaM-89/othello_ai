@@ -7,7 +7,7 @@ WHITE = 2
 BOARD_SIZE = 8
 
 def create_board():
-    """Create and return a new Othello board with starting position."""
+    # sets up 8*8 board with 4 starting discs in centre
     board = np.zeros((BOARD_SIZE, BOARD_SIZE), dtype=int)
     # Starting position - 4 discs in the centre
     board[3][3] = WHITE
@@ -17,7 +17,7 @@ def create_board():
     return board
 
 def print_board(board):
-    """Print the board in a readable format."""
+    # prints the board with column letters and row numbers
     print("\n  A B C D E F G H")
     print("  ----------------")
     for row in range(BOARD_SIZE):
@@ -33,11 +33,11 @@ def print_board(board):
     print()
 
 def get_score(board):
-    """Return the score as (black_count, white_count)."""
+    # Count discs for each players and returns scores
     black = np.sum(board == BLACK)
     white = np.sum(board == WHITE)
     return int(black), int(white)
 
 def is_full(board):
-    """Check if the board is full."""
+   # returns true if no empty squares remain
     return not np.any(board == EMPTY)
