@@ -56,6 +56,24 @@ start = time.time()
 winner7 = play_game(qlearning_agent, minimax_agent, display=False)
 time7 = round(time.time() - start, 2)
 
+# Game 8 — Q-Learning vs Alpha-Beta
+print("Game 8: Q-Learning vs Alpha-Beta...")
+start = time.time()
+winner8 = play_game(qlearning_agent, alphabeta_agent, display=False)
+time8 = round(time.time() - start, 2)
+
+# Game 9 — Q-Learning vs MCTS
+print("Game 9: Q-Learning vs MCTS...")
+start = time.time()
+winner9 = play_game(qlearning_agent, mcts_agent, display=False)
+time9 = round(time.time() - start, 2)
+
+# Game 10 — Alpha-Beta vs MCTS
+print("Game 10: Alpha-Beta vs MCTS...")
+start = time.time()
+winner10 = play_game(alphabeta_agent, mcts_agent, display=False)
+time10 = round(time.time() - start, 2)
+
 # Results Summary
 print("\n" + "=" * 40)
 print("         RESULTS SUMMARY")
@@ -76,7 +94,9 @@ print(f"Game 4 - Q-Learning vs Random   : {result(winner4, 'Q-Learning', 'Random
 print(f"Game 5 - Alpha-Beta vs Minimax  : {result(winner5, 'Alpha-Beta', 'Minimax')} | {time5}s")
 print(f"Game 6 - MCTS vs Minimax        : {result(winner6, 'MCTS', 'Minimax')} | {time6}s")
 print(f"Game 7 - Q-Learning vs Minimax  : {result(winner7, 'Q-Learning', 'Minimax')} | {time7}s")
-
+print(f"Game 8  - Q-Learning vs Alpha-Beta : {result(winner8, 'Q-Learning', 'Alpha-Beta')} | {time8}s")
+print(f"Game 9  - Q-Learning vs MCTS       : {result(winner9, 'Q-Learning', 'MCTS')} | {time9}s")
+print(f"Game 10 - Alpha-Beta vs MCTS       : {result(winner10, 'Alpha-Beta', 'MCTS')} | {time10}s")
 print(f"\nSpeed Comparison:")
 print(f"Minimax    : {time1}s")
 print(f"Alpha-Beta : {time2}s")
