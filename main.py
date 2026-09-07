@@ -12,7 +12,7 @@ print("=" * 40)
 
 # Train Q-Learning agent first
 print("\nTraining Q-Learning agent...")
-train_qlearning(games=1000)
+train_qlearning(games=10000)
 
 # Game 1 — Minimax vs Random
 print("\nGame 1: Minimax vs Random...")

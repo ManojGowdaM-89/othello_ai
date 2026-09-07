@@ -15,10 +15,10 @@ matchups = [
     'Alpha-Beta\nvs MCTS',
 ]
 
-times = [19.24, 3.59, 89.6, 1.21, 7.04, 71.9, 7.24, 1.96, 61.58, 58.03]
+times = [4.51, 2.89, 63.37, 8.77, 6.56, 61.94, 6.19, 1.81, 51.97, 54.4]
 
 winners = [
-    'Minimax', 'Alpha-Beta', 'MCTS', 'Draw',
+    'Minimax', 'Alpha-Beta', 'MCTS', 'Q-Learning',
     'Alpha-Beta', 'Minimax', 'Minimax',
     'Alpha-Beta', 'MCTS', 'Alpha-Beta'
 ]

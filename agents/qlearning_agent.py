@@ -11,7 +11,7 @@ DISCOUNT_FACTOR = 0.9     # Gamma — importance of future rewards
 EPSILON_START = 1.0       # Start with full exploration
 EPSILON_END = 0.1         # Minimum exploration rate
 EPSILON_DECAY = 0.995     # How fast exploration decreases
-TRAINING_GAMES = 1000     # Number of self-play training games
+TRAINING_GAMES = 10000     # Number of self-play training games
 
 def get_state(board, player):
     """
