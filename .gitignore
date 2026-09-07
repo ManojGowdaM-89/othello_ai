@@ -1,0 +1,4 @@
+agents/q_table.pkl
+__pycache__/
+*.pyc
+.vscode/
