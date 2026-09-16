@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# ── Results Data ──
+# ── Updated Results Data — 100 Tournaments x 2 Games ──
+
 matchups = [
     'Minimax\nvs Random',
     'Alpha-Beta\nvs Random',
@@ -15,176 +16,123 @@ matchups = [
     'Alpha-Beta\nvs MCTS',
 ]
 
-times = [4.51, 2.89, 63.37, 8.77, 6.56, 61.94, 6.19, 1.81, 51.97, 54.4]
+# Win rates for black agent in each matchup
+win_rates = [95.5, 95.0, 97.0, 55.5, 100.0, 16.5, 0.0, 0.0, 12.0, 71.0]
 
-winners = [
-    'Minimax', 'Alpha-Beta', 'MCTS', 'Q-Learning',
-    'Alpha-Beta', 'Minimax', 'Minimax',
-    'Alpha-Beta', 'MCTS', 'Alpha-Beta'
-]
+# Average time per game
+times_per_game = [131.92, 3.76, 7.61, 0.15, 64.85, 62.1, 118.33, 57.21, 62.43, 297.13]
 
-# ── Chart 1: Decision Time Comparison ──
+# Agent overall wins
 agents = ['Minimax', 'Alpha-Beta', 'MCTS', 'Q-Learning']
-agent_times = [19.24, 3.59, 89.6, 1.21]
+agent_wins = [3, 4, 2, 0]
+agent_times = [131.92, 3.76, 7.61, 0.15]
 colors = ['#1F4E79', '#2E75B6', '#7B3F8C', '#B8420A']
 
+# ── Chart 1: Decision Time Comparison ──
 plt.figure(figsize=(10, 6))
 bars = plt.bar(agents, agent_times, color=colors, width=0.5, edgecolor='white')
-plt.title('Agent Decision Time Comparison\n(Time per game in seconds)',
+plt.title('Agent Average Decision Time\n(Average time per game in seconds)',
           fontsize=14, fontweight='bold', pad=15)
 plt.xlabel('Agent', fontsize=12)
-plt.ylabel('Time (seconds)', fontsize=12)
+plt.ylabel('Average Time per Game (seconds)', fontsize=12)
 plt.grid(axis='y', alpha=0.3)
-
 for bar, time in zip(bars, agent_times):
     plt.text(bar.get_x() + bar.get_width()/2,
              bar.get_height() + 1,
              f'{time}s',
              ha='center', va='bottom',
              fontweight='bold', fontsize=11)
-
 plt.tight_layout()
 plt.savefig('chart1_decision_time.png', dpi=150, bbox_inches='tight')
 plt.show()
 print("Chart 1 saved!")
 
-# ── Chart 2: Tournament Results ──
-agent_wins = {
-    'Minimax': 0,
-    'Alpha-Beta': 0,
-    'MCTS': 0,
-    'Q-Learning': 0,
-    'Draw': 0
-}
-
-for winner in winners:
-    agent_wins[winner] += 1
-
-agents2 = ['Minimax', 'Alpha-Beta', 'MCTS', 'Q-Learning', 'Draw']
-wins = [agent_wins[a] for a in agents2]
-colors2 = ['#1F4E79', '#2E75B6', '#7B3F8C', '#B8420A', '#888888']
-
+# ── Chart 2: Tournament Wins ──
 plt.figure(figsize=(10, 6))
-bars2 = plt.bar(agents2, wins, color=colors2, width=0.5, edgecolor='white')
-plt.title('Tournament Results — Total Wins per Agent',
+bars2 = plt.bar(agents, agent_wins, color=colors, width=0.5, edgecolor='white')
+plt.title('Tournament Results — Total Wins per Agent\n(200 games per matchup)',
           fontsize=14, fontweight='bold', pad=15)
 plt.xlabel('Agent', fontsize=12)
-plt.ylabel('Number of Wins', fontsize=12)
-plt.yticks(range(0, max(wins)+2))
+plt.ylabel('Number of Matchups Won', fontsize=12)
+plt.yticks(range(0, 6))
 plt.grid(axis='y', alpha=0.3)
-
-for bar, win in zip(bars2, wins):
+for bar, win in zip(bars2, agent_wins):
     plt.text(bar.get_x() + bar.get_width()/2,
              bar.get_height() + 0.05,
              str(win),
              ha='center', va='bottom',
              fontweight='bold', fontsize=12)
-
 plt.tight_layout()
 plt.savefig('chart2_tournament_wins.png', dpi=150, bbox_inches='tight')
 plt.show()
 print("Chart 2 saved!")
 
-# ── Chart 3: Matchup Results Table ──
-fig, ax = plt.subplots(figsize=(12, 7))
+# ── Chart 3: Results Table ──
+fig, ax = plt.subplots(figsize=(14, 7))
 ax.axis('off')
-
-table_data = []
-for i, (matchup, winner, time) in enumerate(zip(matchups, winners, times)):
-    table_data.append([
-        matchup.replace('\n', ' '),
-        winner,
-        f'{time}s'
-    ])
-
+table_data = [
+    ['Minimax vs Random', '191/200', '6/200', '3/200', '95.5%', '131.92s'],
+    ['Alpha-Beta vs Random', '190/200', '4/200', '6/200', '95.0%', '3.76s'],
+    ['MCTS vs Random', '194/200', '4/200', '2/200', '97.0%', '7.61s'],
+    ['Q-Learning vs Random', '111/200', '85/200', '4/200', '55.5%', '0.15s'],
+    ['Alpha-Beta vs Minimax', '200/200', '0/200', '0/200', '100.0%', '64.85s'],
+    ['MCTS vs Minimax', '33/200', '164/200', '3/200', '16.5%', '62.1s'],
+    ['Q-Learning vs Minimax', '0/200', '200/200', '0/200', '0.0%', '118.33s'],
+    ['Q-Learning vs Alpha-Beta', '0/200', '200/200', '0/200', '0.0%', '57.21s'],
+    ['Q-Learning vs MCTS', '24/200', '175/200', '1/200', '12.0%', '62.43s'],
+    ['Alpha-Beta vs MCTS', '142/200', '56/200', '2/200', '71.0%', '297.13s'],
+]
 table = ax.table(
     cellText=table_data,
-    colLabels=['Matchup', 'Winner', 'Time'],
+    colLabels=['Matchup', 'Black Wins', 'White Wins', 'Draws', 'Black Win%', 'Avg Time'],
     cellLoc='center',
     loc='center',
     bbox=[0, 0, 1, 1]
 )
-
 table.auto_set_font_size(False)
-table.set_fontsize(11)
-
-for j in range(3):
+table.set_fontsize(10)
+for j in range(6):
     table[0, j].set_facecolor('#1F4E79')
     table[0, j].set_text_props(color='white', fontweight='bold')
-
 for i in range(1, len(table_data)+1):
     shade = '#EBF3FB' if i % 2 == 0 else 'white'
-    for j in range(3):
+    for j in range(6):
         table[i, j].set_facecolor(shade)
-    if table_data[i-1][1] != 'Draw':
-        table[i, 1].set_text_props(color='#1F6B3A', fontweight='bold')
-
-plt.title('Complete Tournament Results',
-          fontsize=14, fontweight='bold', pad=20)
+plt.title('Complete Tournament Results\n(100 Tournaments x 2 Games = 200 games per matchup)',
+          fontsize=13, fontweight='bold', pad=20)
 plt.tight_layout()
 plt.savefig('chart3_results_table.png', dpi=150, bbox_inches='tight')
 plt.show()
 print("Chart 3 saved!")
 
-print("\nAll charts generated successfully!")
-print("Files saved: chart1_decision_time.png, chart2_tournament_wins.png, chart3_results_table.png")
-# ── Chart 4: Win Rate Percentage ──
-agents3 = ['Minimax', 'Alpha-Beta', 'MCTS', 'Q-Learning']
-
-# Total games played by each agent
-minimax_games = 5  # vs Random, vs Alpha-Beta, vs MCTS(lost), vs Q-Learning(x2)
-alphabeta_games = 5
-mcts_games = 4
-qlearning_games = 4
-
-# Wins for each agent
-minimax_wins = 3
-alphabeta_wins = 4
-mcts_wins = 2
-qlearning_wins = 0
-
-win_rates = [
-    (minimax_wins / minimax_games) * 100,
-    (alphabeta_wins / alphabeta_games) * 100,
-    (mcts_wins / mcts_games) * 100,
-    (qlearning_wins / qlearning_games) * 100,
-]
-
-colors3 = ['#1F4E79', '#2E75B6', '#7B3F8C', '#B8420A']
-
+# ── Chart 4: Win Rate ──
+win_rate_vals = [95.5, 95.0, 97.0, 55.5]
 plt.figure(figsize=(10, 6))
-bars3 = plt.bar(agents3, win_rates, color=colors3, width=0.5, edgecolor='white')
-plt.title('Agent Win Rate (%)\nAcross All Tournament Matchups',
+bars3 = plt.bar(agents, win_rate_vals, color=colors, width=0.5, edgecolor='white')
+plt.title('Agent Win Rate vs Random Agent\n(200 games per matchup)',
           fontsize=14, fontweight='bold', pad=15)
 plt.xlabel('Agent', fontsize=12)
 plt.ylabel('Win Rate (%)', fontsize=12)
-plt.ylim(0, 110)
+plt.ylim(0, 115)
 plt.grid(axis='y', alpha=0.3)
-plt.axhline(y=50, color='red', linestyle='--', alpha=0.5, label='50% line')
+plt.axhline(y=50, color='red', linestyle='--', alpha=0.5, label='50% baseline')
 plt.legend()
-
-for bar, rate in zip(bars3, win_rates):
+for bar, rate in zip(bars3, win_rate_vals):
     plt.text(bar.get_x() + bar.get_width()/2,
              bar.get_height() + 1.5,
-             f'{rate:.1f}%',
+             f'{rate}%',
              ha='center', va='bottom',
              fontweight='bold', fontsize=12)
-
 plt.tight_layout()
 plt.savefig('chart4_win_rate.png', dpi=150, bbox_inches='tight')
 plt.show()
 print("Chart 4 saved!")
 
-# ── Chart 5: Speed vs Strength Scatter Plot ──
-agent_names = ['Minimax', 'Alpha-Beta', 'MCTS', 'Q-Learning']
-speeds = [19.24, 3.59, 89.6, 1.21]  # time in seconds
-strengths = [3, 4, 2, 0]  # number of wins
-colors4 = ['#1F4E79', '#2E75B6', '#7B3F8C', '#B8420A']
-
+# ── Chart 5: Speed vs Strength ──
+strengths = [3, 4, 2, 0]
 plt.figure(figsize=(10, 7))
-
 for i, (name, speed, strength, color) in enumerate(
-        zip(agent_names, speeds, strengths, colors4)):
+        zip(agents, agent_times, strengths, colors)):
     plt.scatter(speed, strength, color=color, s=300, zorder=5)
     plt.annotate(name,
                  (speed, strength),
@@ -193,24 +141,15 @@ for i, (name, speed, strength, color) in enumerate(
                  fontsize=12,
                  fontweight='bold',
                  color=color)
-
 plt.title('Speed vs Strength Trade-off\n(Lower time = faster, Higher wins = stronger)',
           fontsize=14, fontweight='bold', pad=15)
-plt.xlabel('Decision Time per Game (seconds) — Lower is Faster', fontsize=12)
-plt.ylabel('Number of Wins — Higher is Stronger', fontsize=12)
+plt.xlabel('Average Decision Time per Game (seconds)', fontsize=12)
+plt.ylabel('Number of Matchups Won', fontsize=12)
 plt.grid(True, alpha=0.3)
 plt.yticks(range(0, 6))
-
-# Add quadrant labels
-plt.axhline(y=2, color='grey', linestyle='--', alpha=0.3)
-plt.axvline(x=20, color='grey', linestyle='--', alpha=0.3)
-
 plt.tight_layout()
 plt.savefig('chart5_speed_vs_strength.png', dpi=150, bbox_inches='tight')
 plt.show()
 print("Chart 5 saved!")
 
-print("\nAll 5 charts generated successfully!")
-print("Files: chart1_decision_time.png, chart2_tournament_wins.png,")
-print("       chart3_results_table.png, chart4_win_rate.png,")
-print("       chart5_speed_vs_strength.png")
+print("\nAll 5 charts updated successfully!")

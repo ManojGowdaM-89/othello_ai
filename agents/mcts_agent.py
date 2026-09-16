@@ -94,7 +94,7 @@ class MCTSNode:
             self.parent.backpropagate(result)
 
 
-def mcts_agent(board, player, valid_moves, simulations=500):
+def mcts_agent(board, player, valid_moves, simulations=50):
     """
     MCTS agent — chooses the best move using
     Monte Carlo Tree Search.
